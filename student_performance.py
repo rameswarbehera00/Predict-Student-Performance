@@ -35,7 +35,7 @@ plt.scatter(y_test, y_pred)
 plt.xlabel("Actual G3")
 plt.ylabel("Predicted G3")
 plt.title("Actual vs Predicted Final Grades")
-
+plt.show()
 
 new_student = [[12, 14]]
 
