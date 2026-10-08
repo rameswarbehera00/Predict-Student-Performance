@@ -8,22 +8,22 @@ This project uses the Student Performance dataset to build a simple regression m
 
 The workflow includes:
 
-1. Loading the Mathematics and Portuguese datasets.
+1. Loading the Mathematics dataset.
 2. Exploring the dataset structure.
 3. Selecting `G1` and `G2` as input features.
 4. Using `G3` as the target variable.
 5. Splitting the data into training and testing sets.
 6. Training a linear regression model.
-7. Evaluating the model using R² Score and Mean Squared Error.
+7. Evaluating the model using R² Score and Mean Absolute Error.
 8. Comparing actual and predicted final grades with a scatter plot.
 9. Making a prediction for a new set of grades.
 
 ## Dataset
 
-The project uses two CSV files:
+The repository includes two Excel workbooks:
 
-- `Maths.csv` — Mathematics student performance data.
-- `Portuguese.csv` — Portuguese student performance data.
+- `Maths.xlsx` — Mathematics student performance data used by the model.
+- `Portuguese.xlsx` — Portuguese student performance data, included for reference.
 
 The Mathematics dataset contains **397 students** and **33 columns**.
 
@@ -87,33 +87,19 @@ The trained model achieved:
 
 This means the model explains approximately **84.78% of the variation** in the final grades for the test data.
 
-The Mean Squared Error obtained during testing was approximately:
+The Mean Absolute Error obtained during testing was approximately:
 
 **1.1042**
 
 ## Actual vs Predicted Grades
 
-The following graph compares the students' actual final grades (`G3`) with the grades predicted by the model.
-
-> **Add your graph screenshot here.**
-
-Save your screenshot in the repository, for example:
-
-```text
-images/actual-vs-predicted.png
-```
-
-Then use this Markdown:
-
-```markdown
-![Actual vs Predicted Final Grades](images/actual-vs-predicted.png)
-```
-
 ### Graph
 
-![Actual vs Predicted Final Grades](images/actual-vs-predicted.png)
+![Actual vs Predicted Final Grades](actual_vs_final.png)
 
 The points show that the predicted grades generally follow the actual `G3` values. The closer the points are to a straight diagonal relationship, the better the predictions match the actual grades.
+
+Running the program regenerates `actual_vs_final.png` in the project directory.
 
 ## Example Prediction
 
@@ -135,13 +121,11 @@ This can be rounded for presentation:
 
 ```text
 Predict-Student-Performance/
-│
-├── Maths.csv
-├── Portuguese.csv
+├── Maths.xlsx
+├── Portuguese.xlsx
+├── actual_vs_final.png
 ├── student_performance.py
-├── README.md
-└── images/
-    └── actual-vs-predicted.png
+└── README.md
 ```
 
 ## How to Run
@@ -165,7 +149,7 @@ pip install pandas scikit-learn matplotlib openpyxl
 python student_performance.py
 ```
 
-The program will load the dataset, train the model, display the evaluation results, and generate the actual-vs-predicted graph.
+The program will load the Mathematics workbook, train the model, display the evaluation results, save the actual-vs-predicted graph, and make an example prediction.
 
 ## Key Learning Outcomes
 

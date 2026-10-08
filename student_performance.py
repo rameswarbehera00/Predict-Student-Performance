@@ -1,44 +1,52 @@
+from pathlib import Path
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
-from sklearn.metrics import mean_absolute_error
-maths = pd.read_excel("Maths.csv")
-portuguese = pd.read_excel("Portuguese.csv")
+from sklearn.metrics import mean_absolute_error, r2_score
 
 
-x = maths[["G1", "G2"]]
-y = maths["G3"]
-x_train, x_test, y_train, y_test = train_test_split(
-    x, y, test_size=0.2, random_state=20
-)
+def main():
+    project_dir = Path(__file__).resolve().parent
+    maths = pd.read_excel(project_dir / "Maths.xlsx")
 
-print("X train:", x_train.shape)
-print("X test:", x_test.shape)
-print("Y train:", y_train.shape)
-print("Y test:", y_test.shape)
+    features = maths[["G1", "G2"]]
+    target = maths["G3"]
+    x_train, x_test, y_train, y_test = train_test_split(
+        features, target, test_size=0.2, random_state=20
+    )
 
-model = LinearRegression()
-model.fit(x_train, y_train)
+    print("X train:", x_train.shape)
+    print("X test:", x_test.shape)
+    print("Y train:", y_train.shape)
+    print("Y test:", y_test.shape)
 
-y_pred = model.predict(x_test)
-print(y_pred[:10])
+    model = LinearRegression()
+    model.fit(x_train, y_train)
 
-r2 = r2_score(y_test, y_pred)
-print("R² Score:", r2)
+    predictions = model.predict(x_test)
+    print(predictions[:10])
 
-mae = mean_absolute_error(y_test, y_pred)
-print("Mean Absolute Error:", mae)
+    r2 = r2_score(y_test, predictions)
+    print("R² Score:", r2)
 
-plt.scatter(y_test, y_pred)
-plt.xlabel("Actual G3")
-plt.ylabel("Predicted G3")
-plt.title("Actual vs Predicted Final Grades")
-plt.show()
+    mae = mean_absolute_error(y_test, predictions)
+    print("Mean Absolute Error:", mae)
 
-new_student = [[12, 14]]
+    figure, axis = plt.subplots()
+    axis.scatter(y_test, predictions)
+    axis.set_xlabel("Actual G3")
+    axis.set_ylabel("Predicted G3")
+    axis.set_title("Actual vs Predicted Final Grades")
+    figure.savefig(project_dir / "actual_vs_final.png", bbox_inches="tight")
+    plt.close(figure)
+    print("Plot saved to:", project_dir / "actual_vs_final.png")
 
-prediction = model.predict(new_student)
+    new_student = pd.DataFrame({"G1": [12], "G2": [14]})
+    prediction = model.predict(new_student)
+    print("Predicted Final Grade:", prediction[0])
 
-print("Predicted Final Grade:", prediction[0])
+
+if __name__ == "__main__":
+    main()
